@@ -1,13 +1,15 @@
 import {Request, Response } from 'express';
-import {controller, httpGet, httpPost, interfaces, requestBody} from "inversify-express-utils";
+import {controller, httpGet, httpPost, interfaces, requestBody, response} from "inversify-express-utils";
 import {ScoreRequest} from "../models/scoreRequest";
 import {ScoreResponse} from "../models/scoreResponse";
 import {Score, ScoreModel} from "../models/score";
+import {inject} from "inversify";
+import {ScoreService} from "../services/score.service";
 
 @controller('/score')
 export class ScoreController implements interfaces.Controller {
 
-    constructor() { }
+    constructor(@inject('ScoreService') private scoreService: ScoreService) { }
 
     @httpGet('/')
     private async get(req: Request, res: Response) {
@@ -15,9 +17,12 @@ export class ScoreController implements interfaces.Controller {
     }
 
     @httpPost('/')
-    private post(@requestBody() req: ScoreRequest, res: ScoreResponse) {
-        const score = new Score ({steps: req.steps, seconds: req.seconds, name: req.name});
-        score.save();
-        return {position: 4}
+    private post(@requestBody() req: ScoreRequest, res: ScoreResponse, @response() status: Response) {
+        if (this.scoreService.ifValidScore(req) !== undefined) {
+            const score = new Score({steps: req.steps, seconds: req.seconds, name: req.name});
+            score.save();
+            return status.status(200).send();
+        }
+        return status.status(400).send(new Error("Invalid game token").message);
     }
 }

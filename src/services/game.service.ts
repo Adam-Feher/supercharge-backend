@@ -5,7 +5,7 @@ import {GameModel} from "../models/gameModel";
 @injectable()
 export class GameService {
     private pictures: string[] = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png'];
-    public readonly runningGames: GameModel[];
+    public readonly runningGames: GameModel[]= [];
 
     constructor(@inject('UuidGenerator') private uuidGenerator: UuidGenerator) { }
 
@@ -13,7 +13,7 @@ export class GameService {
     public newGame(difficulty: number) {
         const usedCards = this.pictures.slice(0, difficulty);
         const deck = this.shuffle([...usedCards,...usedCards]);
-        this.runningGames.push({pictures: deck, token: this.uuidGenerator.generate() })
+        this.runningGames.push({pictures: deck, token: this.uuidGenerator.generate()});
         return this.shuffle([...usedCards,...usedCards])
     }
 
