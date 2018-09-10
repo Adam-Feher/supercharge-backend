@@ -1,5 +1,5 @@
 import {Request, Response } from 'express';
-import {controller, httpDelete, httpGet, httpPost, httpPut, interfaces} from "inversify-express-utils";
+import {controller, httpGet, httpPost, interfaces} from "inversify-express-utils";
 
 @controller('/score')
 export class ScoreController implements interfaces.Controller {
