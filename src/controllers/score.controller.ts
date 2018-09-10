@@ -2,7 +2,7 @@ import {Request, Response } from 'express';
 import {controller, httpGet, httpPost, interfaces, requestBody, response} from "inversify-express-utils";
 import {ScoreRequest} from "../models/scoreRequest";
 import {ScoreResponse} from "../models/scoreResponse";
-import {Score, ScoreModel} from "../models/score";
+import {Score} from "../models/score";
 import {inject} from "inversify";
 import {ScoreService} from "../services/score.service";
 
