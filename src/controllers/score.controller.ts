@@ -18,11 +18,14 @@ export class ScoreController implements interfaces.Controller {
     }
 
     @httpPost('/')
-    private postScore(@requestBody() req: ScoreRequest, res: ScoreResponse, @response() status: Response) {
+    private async postScore(@requestBody() req: ScoreRequest, res: ScoreResponse, @response() status: Response) {
         if (this.scoreService.ifValidScore(req) !== undefined) {
-            const score = new Score({steps: req.steps, seconds: req.seconds, name: req.name});
-            score.save();
-            return status.status(200).send();
+            const newScore = new Score({steps: req.steps, seconds: req.seconds, name: req.name});
+            newScore.save();
+            const allScores = await Score.find();
+            const position = allScores.findIndex(score=>score.seconds === newScore.seconds &&
+                                                        score.steps === newScore.steps && score.name===newScore.name);
+            return status.status(200).send({position});
         }
         return status.status(400).send(new Error("Invalid game token").message);
     }
