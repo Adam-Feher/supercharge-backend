@@ -1,4 +1,4 @@
-import {Request, Response } from 'express';
+import { Response } from 'express';
 import {controller, httpGet, httpPost, interfaces, requestBody, response} from "inversify-express-utils";
 import {ScoreRequest} from "../models/scoreRequest";
 import {ScoreResponse} from "../models/scoreResponse";
@@ -12,12 +12,13 @@ export class ScoreController implements interfaces.Controller {
     constructor(@inject('ScoreService') private scoreService: ScoreService) { }
 
     @httpGet('/')
-    private async get(req: Request, res: Response) {
-        return await Score.find();//.sort((obj1: any, obj2: any) => obj1.steps-obj2.steps);
+    private async getHighScores() {
+        const allScores = await Score.find();
+        return allScores.sort((score1, score2) => score1.steps - score2.steps);
     }
 
     @httpPost('/')
-    private post(@requestBody() req: ScoreRequest, res: ScoreResponse, @response() status: Response) {
+    private postScore(@requestBody() req: ScoreRequest, res: ScoreResponse, @response() status: Response) {
         if (this.scoreService.ifValidScore(req) !== undefined) {
             const score = new Score({steps: req.steps, seconds: req.seconds, name: req.name});
             score.save();
