@@ -1,0 +1,28 @@
+{
+  "name": "magicofdaniel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/src/index.js",
+    "test": "jasmine dist/spec/*spec.js",
+    "postinstall": "tsc"
+  },
+  "author": "Adam Feher",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mongoose": "^5.2.11",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "inversify": "^4.13.0",
+    "inversify-express-utils": "^6.1.0",
+    "mongoose": "^5.2.13",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/jasmine": "^2.8.8",
+    "jasmine": "^3.2.0"
+  }
+}
