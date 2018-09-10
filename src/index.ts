@@ -5,9 +5,11 @@ import {InversifyExpressServer} from "inversify-express-utils";
 import "./controllers/game.controller";
 import "./controllers/score.controller";
 import {GameService} from "./services/game.service";
+import {connect} from "mongoose";
 
 
 const port = process.env.PORT || 4000;
+connect(process.env.MONGODB_URL!, {useNewUrlParser: true});
 
 const container = new Container(); // IoC container
 container.bind<GameService>('GameService').to(GameService).inSingletonScope();

@@ -6,7 +6,6 @@ export class GameService {
 
     public newGame(difficulty: number) {
         const usedCards = this.pictures.slice(0, difficulty);
-        console.log(this.shuffle([...usedCards, ...usedCards]));
         return this.shuffle([...usedCards,...usedCards])
     }
 
