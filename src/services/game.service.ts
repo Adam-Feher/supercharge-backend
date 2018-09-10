@@ -5,7 +5,7 @@ import {GameModel} from "../models/gameModel";
 @injectable()
 export class GameService {
     private pictures: string[] = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png'];
-    private readonly runningGames: GameModel[];
+    public readonly runningGames: GameModel[];
 
     constructor(@inject('UuidGenerator') private uuidGenerator: UuidGenerator) { }
 
