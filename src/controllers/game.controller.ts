@@ -1,13 +1,14 @@
-import {Request, Response } from 'express';
-import {controller, httpGet, interfaces} from "inversify-express-utils";
+import {controller, httpGet, interfaces, requestParam} from "inversify-express-utils";
+import {inject} from "inversify";
+import {GameService} from "../services/game.service";
 
 @controller('/game')
 export class GameController implements interfaces.Controller {
 
-    constructor() { }
+    constructor(@inject('GameService') private gameService: GameService) { }
 
     @httpGet('/:size')
-    private get(req: Request, res: Response) {
-
+    private newGame(@requestParam('size') size: number) {
+        return this.gameService.newGame(size)
     }
 }
